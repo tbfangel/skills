@@ -1,0 +1,23 @@
+{
+  "name": "tbfangel",
+  "owner": {
+    "name": "Thomas Bøgh Fangel",
+    "email": "thomasfangel@gmail.com"
+  },
+  "metadata": {
+    "description": "Thomas Bøgh Fangel's personal marketplace of Claude Code skills, organised into plugins by activity.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "engineering",
+      "source": "./plugins/engineering",
+      "description": "Skills for writing, reviewing, testing, and shipping code."
+    },
+    {
+      "name": "knowledge",
+      "source": "./plugins/knowledge",
+      "description": "Skills for research, writing, documentation, and synthesising information."
+    }
+  ]
+}

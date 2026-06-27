@@ -1,0 +1,9 @@
+{
+  "name": "engineering",
+  "description": "Skills for writing, reviewing, testing, and shipping code.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Thomas Bøgh Fangel",
+    "email": "thomasfangel@gmail.com"
+  }
+}

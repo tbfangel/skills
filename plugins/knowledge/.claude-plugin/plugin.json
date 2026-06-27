@@ -1,0 +1,9 @@
+{
+  "name": "knowledge",
+  "description": "Skills for research, writing, documentation, and synthesising information.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Thomas Bøgh Fangel",
+    "email": "thomasfangel@gmail.com"
+  }
+}
