@@ -18,6 +18,11 @@
       "name": "knowledge",
       "source": "./plugins/knowledge",
       "description": "Skills for research, writing, documentation, and synthesising information."
+    },
+    {
+      "name": "process",
+      "source": "./plugins/process",
+      "description": "Skills for team and engineering process rituals — briefings, standups, and recurring workflows."
     }
   ]
 }
