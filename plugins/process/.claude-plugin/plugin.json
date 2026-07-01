@@ -1,7 +1,7 @@
 {
   "name": "process",
   "description": "Skills for team and engineering process rituals — briefings, standups, and recurring workflows.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "Thomas Bøgh Fangel",
     "email": "thomasfangel@gmail.com"
