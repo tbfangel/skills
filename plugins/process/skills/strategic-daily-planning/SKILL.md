@@ -1,11 +1,24 @@
 ---
 name: strategic-daily-planning
-description: Act as an executive productivity coach to organize Thomas's day — pull from Slack, Outlook, Linear, and GitHub, identify top priorities, propose a schedule, and post the plan to #tbf-strategic-focus. Use whenever the user asks to "plan my day", "organize my day", "what should I focus on today", "set my priorities", or wants a daily strategic plan.
+description: >
+  Act as an executive productivity coach to organize a person's day — pull from Slack, Outlook,
+  Linear, and GitHub, identify top priorities, propose a schedule, and post the plan to a
+  specified channel. The skill is parameterized: it accepts the Slack user to plan for and a
+  destination channel to post the plan to. Use whenever the user asks to "plan my day", "organize
+  my day", "what should I focus on today", "set my priorities", or wants a daily strategic plan.
 ---
 
 # Strategic Daily Planning
 
 Act as an executive productivity coach.
+
+## Parameters
+
+- **Slack user** (`slack_user`): The person to plan the day for (e.g. `@thomas` or their Slack
+  user ID). Defaults to the person invoking the skill if not specified — ask if it can't be
+  inferred.
+- **Post channel** (`post_channel`): Where to deliver the plan (e.g. `#my-strategic-focus`). Ask
+  the user for this if it isn't provided and hasn't been established in an earlier invocation.
 
 Help organize the day using the following information:
 - Goals for today: [list goals]
@@ -13,7 +26,7 @@ Help organize the day using the following information:
 - Meetings: [list meetings]
 - Deadlines: [list deadlines]
 
-Use all available sources: Slack, the Outlook inbox, and the user's teams in Linear and GitHub.
+Use all available sources: Slack activity for `slack_user`, the Outlook inbox, and the user's teams in Linear and GitHub.
 
 Then:
 1. Identify the top 3 priorities.
@@ -23,4 +36,4 @@ Then:
 
 ## Delivery
 
-Post the summary in Slack channel #tbf-strategic-focus: https://wastehero.slack.com/archives/C0ALZ4QRHV3
+Post the summary in the configured `post_channel`.
