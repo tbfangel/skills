@@ -1,0 +1,19 @@
+name: Plugin version check
+
+# Ensure that when a plugin's skills change, its version is bumped too —
+# otherwise `claude plugin update` won't pull the change for installed clients.
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  version-bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check changed plugins are version-bumped
+        run: bash scripts/check-version-bumps.sh "${{ github.event.pull_request.base.sha }}"
