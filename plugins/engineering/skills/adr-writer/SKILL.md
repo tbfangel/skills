@@ -35,7 +35,28 @@ convention stated in the conversation, or an explicit path). Use that. Otherwise
    Do not guess a new location silently.
 
 Call the resolved directory `ADR_DIR` below. Its index file is `ADR_DIR/README.md` (or the
-existing index file the directory already uses).
+existing index file the directory already uses — in an OKF bundle this is `ADR_DIR/index.md`).
+
+---
+
+## Step 0.5 — Detect OKF context
+
+If the ADRs live inside an **OKF (Open Knowledge Format) bundle**, ADRs must be written as OKF
+concept cards, not plain Markdown. Detect this before writing:
+
+1. Look for an OKF bundle root at or above `ADR_DIR` — an `index.md` whose frontmatter declares
+   `okf_version`:
+   ```bash
+   grep -rl --include=index.md "okf_version" . 2>/dev/null | head
+   ```
+2. If found, set **OKF mode** and locate the bundle's local schema — a `schema.md`, `CLAUDE.md`,
+   or similar page describing the local `type` taxonomy and house style. **Read it; it is
+   authoritative over the generic guidance here** (it may fix the `type` value, required tags,
+   or a house card style).
+3. In OKF mode, use the **OKF ADR card** format below instead of the plain template, and the
+   bundle's reserved `index.md` is the ADR index (see [ADR Index Maintenance](#adr-index-maintenance)).
+
+If there is no OKF bundle, use the plain ADR template as normal.
 
 ---
 
@@ -63,6 +84,47 @@ technologies, or patterns chosen.]
 [What becomes easier. What becomes harder. Risks and mitigation strategies.
 Any technical debt introduced.]
 ```
+
+### OKF ADR card (use in OKF mode — Step 0.5)
+
+Wrap the same four sections in OKF frontmatter and a summary lead line. Only `type` is required
+by OKF, but fill the recommended fields. Use the `type` value the local schema specifies for
+decisions (e.g. `decision`); if the schema is silent, use `decision`.
+
+```markdown
+---
+type: decision                                   # or whatever the local schema names decisions
+title: NNNN. <Decision title>
+description: <One-sentence statement of the decision>
+tags: [decision, <topic tags per local schema>]
+timestamp: <YYYY-MM-DD>                           # today, or the date the status last changed
+---
+
+# NNNN. <Decision title>
+
+> <One-sentence statement of the decision — same text as `description`>
+
+## Status
+[Proposed | Accepted | Deprecated | Superseded by [NNNN](link)]
+
+## Context
+[As above.]
+
+## Decision
+[As above.]
+
+## Consequences
+[As above.]
+
+## Related
+- [Concepts and other ADRs this bears on](/path/to/card.md) — as plain Markdown links.
+```
+
+Notes for OKF mode:
+- The ADR's four sections carry the substance, so a separate `## Key Facts` section is not
+  required; `## Related` supplies the OKF cross-links.
+- Keep `description` and the `>` lead line identical, and bump `timestamp` when the status changes.
+- Preserve any extra frontmatter keys the local schema requires.
 
 ## Numbering
 
@@ -96,7 +158,8 @@ Never delete deprecated or superseded ADRs — they provide historical context.
 
 ## ADR Index Maintenance
 
-After creating a new ADR, add a row to the index (`ADR_DIR/README.md`):
+After creating a new ADR, add a row to the index (`ADR_DIR/README.md`, or `ADR_DIR/index.md`
+in an OKF bundle — where it is the reserved navigation file, so omit `type`/`description` on it):
 
 | ID | Title | Status |
 |----|-------|--------|
