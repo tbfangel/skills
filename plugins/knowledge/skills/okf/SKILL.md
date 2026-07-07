@@ -92,10 +92,17 @@ Rules from the spec:
   missing optional fields, broken links, and absent `index.md` files. Never reject a bundle
   for these; preserve unknown keys when editing.
 - A bundle may carry **extra custom frontmatter keys** beyond the above — keep them intact.
+- **The body is not mandated.** The spec fixes the frontmatter (`type`) and that relationships
+  are Markdown links; it does **not** standardize the body. The `Key Facts` / `Links` /
+  `Related` layout above is the recommended **digest** house style for knowledge cards. Other
+  card types may use a different body and still be valid OKF — e.g. a `decision` card (ADR)
+  using Status / Context / Decision / Consequences, or a `spec` card using a spec template —
+  as long as `type` is set and cross-links are Markdown links. A `## Related` block is the
+  portable way any card, whatever its body, exposes its relationships.
 
 > A given wiki may layer its own conventions on top of OKF (a fixed `type` taxonomy, required
-> `tags`, a digest-card house style). If the wiki has a CLAUDE.md / schema doc, read it and
-> follow it — it is authoritative over the generic guidance here.
+> `tags`, per-type body templates, a digest-card house style). If the wiki has a CLAUDE.md /
+> `schema.md` doc, read it and follow it — it is authoritative over the generic guidance here.
 
 ---
 
@@ -133,8 +140,10 @@ Search the bundle before creating anything. **Update an existing card rather tha
 1. Create the file at the correct path for its section/`type` (the path becomes its concept ID).
 2. Use the concept-card format above. Set `type` (required) and, where they apply, `title`,
    `description`, `resource`, `tags`, and today's `timestamp`.
-3. Keep it a **digest, not a copy**: 2–5 Key Facts in your own words, at least one
-   authoritative Link, and `Related` cross-links to adjacent cards.
+3. Body: for **digest/knowledge cards**, keep it a digest, not a copy — 2–5 Key Facts in your
+   own words, at least one authoritative Link, and `Related` cross-links. For **type-specific
+   cards** (e.g. `decision`, `spec`), follow that type's body template from the local schema,
+   still add a `Related` block, and never paste source content.
 4. Update the section `index.md` — add a one-line, alphabetically-sorted entry.
 5. If you created a new section, add it to the bundle-root `index.md` (which carries
    `okf_version`).
@@ -167,8 +176,9 @@ commit convention if it has one (e.g. a `wiki:` prefix).
 - [ ] No content copied verbatim from an external source
 - [ ] `type` present and non-empty; recommended fields filled where they apply
 - [ ] `description` matches the `>` lead line
-- [ ] Key Facts ≤ 5 bullets
-- [ ] At least one authoritative Link
+- [ ] Key Facts ≤ 5 bullets *(digest/knowledge cards)*
+- [ ] At least one authoritative Link *(digest/knowledge cards)*
+- [ ] Type-specific cards (`decision`, `spec`, …) follow their type's body template
 - [ ] `timestamp` is today's date (for new/updated cards)
 - [ ] Section `index.md` updated when a card was added/removed
-- [ ] Cross-references added to related cards; unknown frontmatter keys preserved
+- [ ] Cross-references added via a `Related` block; unknown frontmatter keys preserved
