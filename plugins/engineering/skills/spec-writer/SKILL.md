@@ -168,6 +168,28 @@ reserved nav file, so omit `type`/`description` on it; else `SPEC_DIR/README.md`
 |----|-------|--------|
 | 0001 | ... | Draft |
 
+## Verify the draft — read it as the implementer
+
+Writing the spec is not the last step. Once it is written, **read the whole thing back as if you
+were about to implement it with no other context**, and hunt for anything that would block or
+mislead you:
+
+- **Every acceptance criterion** — is it objectively true/false, and could you write its test
+  right now? If a criterion needs a value, name, or shape the spec does not give, it is
+  underspecified — fix it.
+- **The contracts** — are field names, headers, status codes, error shapes, defaults, and units
+  all pinned? An implementer should never have to guess a name or invent a shape.
+- **Hand-wavy claims** — flag anything you'd have to interpret, or any "X does Y" that X does not
+  actually do (e.g. a tool that doesn't generate what you claimed). Correct it to what is real,
+  and name the real dependency.
+- **Implicit forks** — a decision the spec silently assumes (versioning, base paths, strict vs
+  loose modes) should be stated outright, or promoted to an ADR.
+- **Over-specification** — settled tech choices that belong in an ADR, not the behavioral
+  contract; move them out and cite the ADR.
+
+Fix what you find; surface it to the user when it is a genuine decision. Only a draft that
+survives this cold read-through is ready to hand to an implementer.
+
 ## Behavioural principles
 
 - **Interview until crystal clear** — the writing is the easy part; the clarity is the work.
@@ -176,3 +198,5 @@ reserved nav file, so omit `type`/`description` on it; else `SPEC_DIR/README.md`
 - **Ground in the doctrine**; don't re-derive the tech stack or re-litigate settled decisions.
 - **Promote architectural forks to ADRs**; keep the spec a digest, readable in a few minutes.
 - When a spec and an ADR conflict, the **ADR wins** until a superseding ADR changes it.
+- **Verify by reading as the implementer** — after writing, read the spec back cold and fix every
+  place you would have to guess.
