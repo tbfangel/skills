@@ -100,14 +100,16 @@ typical OKF `docs/specs/conventions.md`):
 ---
 type: spec
 title: NNNN. <Title>
-description: <One-sentence statement of what this spec defines>
+description: <What this spec defines, in <=25 words. It is the text the spec index is
+  built from, so it must let a reader rule the spec in or out without opening it.
+  A ceiling, not a target; follow the local schema if it sets its own.>
 tags: [spec, <topic tags per local schema>]
 timestamp: <YYYY-MM-DD>
 ---
 
 # NNNN. <Title>
 
-> <One-sentence statement of what this spec defines — same text as `description`>
+> <Same string as `description`, verbatim>
 
 ## Status
 Draft | Ready | Implemented | Superseded by [NNNN](link)
@@ -137,6 +139,49 @@ Concepts and ADRs this spec touches, as plain Markdown links.
 ```
 
 In **plain (non-OKF) mode**, drop the frontmatter and `>` lead line; keep the sections.
+
+---
+
+## Write contract, not design defense
+
+**This is the discipline that keeps specs readable as a corpus grows, and it is the one most
+often lost.** A spec is read by an implementer who needs to know *what to build*. It is written,
+usually, right after an argument about *what the right design is* — and the argument leaks in.
+The result is a spec that reads as a defense of its own choices: correct, well-argued, and two
+to three times longer than the contract it carries.
+
+The tell is a sentence that would not change what anyone builds. "This is the one place where
+contagion is correct." "It is the cheapest correct answer." "Everywhere else in this spec a
+stuck source poisoning its cards is the bug." Each of those defends a choice against an
+objection the implementer never raised.
+
+```
+DEFENSE  ...propagating it is what stops a popular source from generating unbounded
+         retry work across every collection that holds it. This is the one place where
+         contagion is correct. Everywhere else in this spec a stuck source poisoning
+         its cards is the bug.
+
+CONTRACT A terminal source writes `internal_error` to every card over it, immediately;
+         those cards consume no attempts of their own.
+```
+
+**Rationale is not deleted — it is relocated.** The *why* is the ADR layer's job, and an
+argument that survives only in a spec is an architectural decision hiding in a contract. When
+you cut a load-bearing argument:
+
+1. If an ADR already covers it → cite that ADR and cut the prose.
+2. If none does, and the argument is a genuine architectural fork → **promote it to an ADR**
+   (via `adr-writer`) and cite it.
+3. If it is neither — a small local judgment with no ADR-sized decision behind it — one clause
+   is enough. Do not build a paragraph around it.
+
+Two things that are **not** defense and must stay: a constraint that changes what gets built,
+and a stated non-obvious *bound* ("this is deferred, and here is what retires it"). Cutting
+those loses contract, not argument.
+
+**A length signal, not a limit.** Past roughly 2,500 words a spec is usually one of two things:
+carrying rationale that belongs in an ADR, or two specs wearing one number. Neither is fixed by
+writing more tightly. Check which it is before continuing.
 
 ## Numbering
 
@@ -186,6 +231,10 @@ mislead you:
   loose modes) should be stated outright, or promoted to an ADR.
 - **Over-specification** — settled tech choices that belong in an ADR, not the behavioral
   contract; move them out and cite the ADR.
+- **Design defense** — run the cut test from *Write contract, not design defense* over every
+  paragraph: **would removing this sentence change what someone builds?** If no, it is
+  rationale — relocate it to an ADR or drop it. Do this pass last, once the contract is settled,
+  so you are cutting from something you know is complete.
 
 Fix what you find; surface it to the user when it is a genuine decision. Only a draft that
 survives this cold read-through is ready to hand to an implementer.
@@ -197,6 +246,8 @@ survives this cold read-through is ready to hand to an implementer.
 - Every **acceptance criterion is objectively true or false**.
 - **Ground in the doctrine**; don't re-derive the tech stack or re-litigate settled decisions.
 - **Promote architectural forks to ADRs**; keep the spec a digest, readable in a few minutes.
+- **Contract, not defense** — if a sentence would not change what someone builds, it is
+  rationale. Relocate it to an ADR or cut it.
 - When a spec and an ADR conflict, the **ADR wins** until a superseding ADR changes it.
 - **Verify by reading as the implementer** — after writing, read the spec back cold and fix every
   place you would have to guess.

@@ -56,7 +56,7 @@ Call the resolved base `WIKI` below.
 ---
 type: <short string for the kind of concept>   # REQUIRED, non-empty
 title: <Human-readable display name>            # recommended
-description: <One-sentence summary>             # recommended (mirror as the `>` lead line)
+description: <What this card is, in <=25 words> # recommended (mirror as the `>` lead line)
 resource: <URI of the underlying asset>         # recommended, when one exists
 tags: [<tag1>, <tag2>]                          # recommended
 timestamp: <YYYY-MM-DD>                          # recommended; ISO 8601, last meaningful change
@@ -80,6 +80,17 @@ Rules from the spec:
 
 - **`type` is the only required field** and must be non-empty. All others are recommended.
   Recommended field order: `type`, `title`, `description`, `resource`, `tags`, `timestamp`.
+- **`description` is the index row — 25 words, a ceiling and not a target.** It states *what the
+  card is*, never why it matters or how it works; the body owns those. Every `index.md` in the
+  bundle is built from it, so it has to let a reader rule the card in or out **without opening
+  it**. The `>` lead line repeats it **verbatim** — one string in two places, so they cannot
+  drift apart. Follow the local schema if it sets its own ceiling.
+
+  Descriptions lengthen as a bundle grows: each new card is written beside more context, and its
+  author reaches for more qualifiers. Left alone this ends with paragraph-long descriptions and
+  an index nobody can scan — which pushes every reader back into the cards, the exact cost the
+  index exists to remove. If a card genuinely needs a paragraph of framing, put it in the body
+  under the lead line, where it costs nothing to skip.
 - **Concept ID** = the file's path within the bundle minus `.md` (e.g. `services/iam.md` → `services/iam`).
 - **Relationships are plain Markdown links.** Prefer **absolute** links (start with `/`,
   relative to the bundle root); relative links are also valid. The relationship type is
@@ -144,7 +155,9 @@ Search the bundle before creating anything. **Update an existing card rather tha
    own words, at least one authoritative Link, and `Related` cross-links. For **type-specific
    cards** (e.g. `decision`, `spec`), follow that type's body template from the local schema,
    still add a `Related` block, and never paste source content.
-4. Update the section `index.md` — add a one-line, alphabetically-sorted entry.
+4. Update the section `index.md`. **Carry the card's `description` into the entry, not just its
+   title** — a title-only index cannot tell a reader whether the card answers their question, so
+   they open all of them. Match the index's existing entry format.
 5. If you created a new section, add it to the bundle-root `index.md` (which carries
    `okf_version`).
 
@@ -175,7 +188,7 @@ commit convention if it has one (e.g. a `wiki:` prefix).
 - [ ] Local schema/CLAUDE.md read and followed, if present
 - [ ] No content copied verbatim from an external source
 - [ ] `type` present and non-empty; recommended fields filled where they apply
-- [ ] `description` matches the `>` lead line
+- [ ] `description` is ≤ 25 words, states what the card *is*, and matches the `>` lead line verbatim
 - [ ] Key Facts ≤ 5 bullets *(digest/knowledge cards)*
 - [ ] At least one authoritative Link *(digest/knowledge cards)*
 - [ ] Type-specific cards (`decision`, `spec`, …) follow their type's body template
