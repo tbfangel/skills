@@ -65,6 +65,10 @@ If there is no OKF bundle, use the plain ADR template as normal.
 ```markdown
 # [NNNN]. [TITLE]
 
+> [What this decides, in <=25 words — see "The description is the index row".
+> Plain mode has no frontmatter, so this lead line *is* the ADR's description,
+> and it is what the index entry carries.]
+
 ## Status
 
 [Proposed | Accepted | Deprecated | Superseded by [ADR-NNNN](link)]
@@ -95,14 +99,14 @@ decisions (e.g. `decision`); if the schema is silent, use `decision`.
 ---
 type: decision                                   # or whatever the local schema names decisions
 title: NNNN. <Decision title>
-description: <One-sentence statement of the decision>
+description: <What this decides, in <=25 words. See "The description is the index row".>
 tags: [decision, <topic tags per local schema>]
 timestamp: <YYYY-MM-DD>                           # today, or the date the status last changed
 ---
 
 # NNNN. <Decision title>
 
-> <One-sentence statement of the decision — same text as `description`>
+> <Same string as `description`, verbatim>
 
 ## Status
 [Proposed | Accepted | Deprecated | Superseded by [NNNN](link)]
@@ -125,6 +129,32 @@ Notes for OKF mode:
   required; `## Related` supplies the OKF cross-links.
 - Keep `description` and the `>` lead line identical, and bump `timestamp` when the status changes.
 - Preserve any extra frontmatter keys the local schema requires.
+
+## The description is the index row — **25 words, hard ceiling**
+
+`description` states **what the ADR decides**. Not why, not the alternatives, not the
+consequences — the body owns all three. It is the text the index is built from, so it must let
+a reader rule the ADR in or out **without opening it**.
+
+Follow the local schema if it sets its own ceiling. Otherwise: **25 words, and that is a
+ceiling, not a target.** Descriptions drift longer as a corpus grows — each new ADR is written
+next to more context and its author reaches for more qualifiers — and a long description is
+worse than a short one at the only job it has.
+
+```
+BAD  (60+ words, and mostly rationale)
+     The frontend is a Solid single-page application built with Vite, consuming the
+     backend exclusively through a generated client committed from the OpenAPI
+     contract, served as static assets from the same origin as the API so that the
+     session cookie stays same-site, which avoids the third-party-cookie problem…
+
+GOOD (23 words, states the decision)
+     The frontend is a Solid and Vite app in `web/`, consuming the backend through a
+     committed client generated from its OpenAPI contract.
+```
+
+Write the clause **after** the Decision section, not before — it is a compression of what you
+decided, and you cannot compress it until it exists.
 
 ## Numbering
 
@@ -158,14 +188,36 @@ Never delete deprecated or superseded ADRs — they provide historical context.
 
 ## ADR Index Maintenance
 
-After creating a new ADR, add a row to the index (`ADR_DIR/README.md`, or `ADR_DIR/index.md`
-in an OKF bundle — where it is the reserved navigation file, so omit `type`/`description` on it):
+Match the existing index format if there is one; create the index if the directory has none.
+(`ADR_DIR/README.md`, or `ADR_DIR/index.md` in an OKF bundle — the reserved navigation file, so
+omit `type`/`description` on it.)
 
-| ID | Title | Status |
-|----|-------|--------|
-| 0001 | ... | Accepted |
+**An entry carries the decision, not just the title.** A title-only index cannot answer *"has
+this already been decided?"* — the reader has to open every card to find out, which is the one
+cost the index exists to remove. Carry each ADR's clause into its entry — its `description` in
+OKF mode, its lead line in plain mode:
 
-If the directory has no index yet, create one. Match the existing index format if there is one.
+```markdown
+- **[0009. Global sources, collection-scoped cards](0009-global-sources-collection-scoped-cards.md)** — Accepted
+  Sources are global, keyed by canonical URL, and own the shared neutral read; a card is a
+  (collection, source) pair owning tags, cluster and notes.
+```
+
+A list beats a table once the clause is present — 25 words in a table cell wraps badly and
+pushes the status column off the screen. Keep a table only if the index already is one.
+
+## Before writing: has this already been decided?
+
+**Read the index before drafting.** An ADR corpus grows past the point where anyone holds it in
+their head, and the characteristic failure is not a missing ADR — it is a fluent new ADR that
+silently re-decides, or contradicts, something an existing one settled. Nothing about that
+failure is visible at review time unless someone happens to remember the earlier card.
+
+So: scan the index's decision clauses, open the two or three that look adjacent, and then state
+explicitly in `## Context` how the new ADR relates to them — extends, refines, supersedes, or is
+genuinely orthogonal. If it supersedes one, update that ADR's status and link both ways.
+
+If the index carries titles only, it cannot answer this. Say so, and offer to add the clauses.
 
 ## Behavioural Principles
 
@@ -174,3 +226,5 @@ If the directory has no index yet, create one. Match the existing index format i
 - Consider both positive and negative consequences
 - Link related ADRs when applicable
 - Keep ADRs readable in a few minutes
+- **The body argues; the description states.** Keep rationale out of the description, and keep
+  the description out of the argument's way.
