@@ -165,7 +165,11 @@ Search the bundle before creating anything. **Update an existing card rather tha
 1. Change only what is new or wrong; preserve unknown/custom frontmatter keys.
 2. Bump `timestamp` to today. If the summary changed, update both `description` and the
    `>` lead line so they still match.
-3. Fix or extend Links and cross-references.
+3. **If `description` changed, update the card's index entry in the same edit.** Because the
+   entry carries the description, a card can now go stale in the index without being added or
+   removed — the index still lists it, just says the wrong thing about it. That is the quietest
+   failure in the bundle, so treat a description edit as a two-file change.
+4. Fix or extend Links and cross-references.
 
 ### Ingest a source (notes, PR, thread, article…)
 1. If the wiki tracks ingested sources (e.g. a `sources/` log or `log.md`), check whether this
@@ -193,5 +197,5 @@ commit convention if it has one (e.g. a `wiki:` prefix).
 - [ ] At least one authoritative Link *(digest/knowledge cards)*
 - [ ] Type-specific cards (`decision`, `spec`, …) follow their type's body template
 - [ ] `timestamp` is today's date (for new/updated cards)
-- [ ] Section `index.md` updated when a card was added/removed
+- [ ] Section `index.md` updated when a card was added, removed, **or had its `description` changed**
 - [ ] Cross-references added via a `Related` block; unknown frontmatter keys preserved

@@ -65,6 +65,10 @@ If there is no OKF bundle, use the plain ADR template as normal.
 ```markdown
 # [NNNN]. [TITLE]
 
+> [What this decides, in <=25 words — see "The description is the index row".
+> Plain mode has no frontmatter, so this lead line *is* the ADR's description,
+> and it is what the index entry carries.]
+
 ## Status
 
 [Proposed | Accepted | Deprecated | Superseded by [ADR-NNNN](link)]
@@ -190,7 +194,8 @@ omit `type`/`description` on it.)
 
 **An entry carries the decision, not just the title.** A title-only index cannot answer *"has
 this already been decided?"* — the reader has to open every card to find out, which is the one
-cost the index exists to remove. Carry each ADR's `description` clause into its entry:
+cost the index exists to remove. Carry each ADR's clause into its entry — its `description` in
+OKF mode, its lead line in plain mode:
 
 ```markdown
 - **[0009. Global sources, collection-scoped cards](0009-global-sources-collection-scoped-cards.md)** — Accepted

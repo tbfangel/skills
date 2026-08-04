@@ -232,9 +232,12 @@ mislead you:
 - **Over-specification** — settled tech choices that belong in an ADR, not the behavioral
   contract; move them out and cite the ADR.
 - **Design defense** — run the cut test from *Write contract, not design defense* over every
-  paragraph: **would removing this sentence change what someone builds?** If no, it is
-  rationale — relocate it to an ADR or drop it. Do this pass last, once the contract is settled,
-  so you are cutting from something you know is complete.
+  paragraph: **would removing this sentence change what someone builds?** A "no" means classify
+  it, not delete it on sight: move **architectural rationale** to an ADR, and drop only
+  **non-contractual commentary** — a choice defended against an objection nobody raised. Product
+  goal, user value, scope boundaries, binding constraints, and a deferral's retirement conditions
+  all stay, whether or not they change a line of code. Do this pass last, once the contract is
+  settled, so you are cutting from something you know is complete.
 
 Fix what you find; surface it to the user when it is a genuine decision. Only a draft that
 survives this cold read-through is ready to hand to an implementer.
