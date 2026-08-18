@@ -1,0 +1,9 @@
+{
+  "name": "experiments",
+  "description": "Skills for experimental and ambitious agent techniques — long-running, multi-agent, quality-driven runs.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Thomas Bøgh Fangel",
+    "email": "thomasfangel@gmail.com"
+  }
+}
