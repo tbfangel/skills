@@ -23,6 +23,11 @@
       "name": "process",
       "source": "./plugins/process",
       "description": "Skills for team and engineering process rituals — briefings, standups, and recurring workflows."
+    },
+    {
+      "name": "experiments",
+      "source": "./plugins/experiments",
+      "description": "Skills for experimental and ambitious agent techniques — long-running, multi-agent, quality-driven runs."
     }
   ]
 }

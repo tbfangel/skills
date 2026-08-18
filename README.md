@@ -9,6 +9,7 @@ organised into plugins by activity.
 | ------------- | ------------------------------------------------------------- |
 | `engineering` | Writing, reviewing, testing, and shipping code.                |
 | `knowledge`   | Research, writing, documentation, and synthesising information. |
+| `experiments` | Experimental and ambitious agent techniques — long-running, multi-agent runs. |
 
 ## Layout
 
@@ -21,6 +22,10 @@ plugins/
       plugin.json           # plugin manifest
     skills/                 # one directory per skill, each with a SKILL.md
   knowledge/
+    .claude-plugin/
+      plugin.json
+    skills/
+  experiments/
     .claude-plugin/
       plugin.json
     skills/
@@ -50,4 +55,5 @@ Instructions for the skill go here.
 /plugin marketplace add tbfangel/skills
 /plugin install engineering@tbfangel
 /plugin install knowledge@tbfangel
+/plugin install experiments@tbfangel
 ```
