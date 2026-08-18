@@ -9,6 +9,7 @@ organised into plugins by activity.
 | ------------- | ------------------------------------------------------------- |
 | `engineering` | Writing, reviewing, testing, and shipping code.                |
 | `knowledge`   | Research, writing, documentation, and synthesising information. |
+| `process`     | Team and engineering process rituals — briefings, standups, recurring workflows. |
 | `experiments` | Experimental and ambitious agent techniques — long-running, multi-agent runs. |
 
 ## Layout
