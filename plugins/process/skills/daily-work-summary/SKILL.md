@@ -74,7 +74,8 @@ Both modes also need activity in the window. Replace `<since>` with the window's
 timestamp:
 
 - Merged: `search(query:"author:@me is:pr merged:>=<since>")`, also selecting `additions
-  deletions changedFiles mergedAt`.
+  deletions changedFiles mergedAt`. If the search you have doesn't return line counts (the
+  GitHub connector's doesn't), leave them out. Don't make a call per PR to get them.
 - Opened and still open: `author:@me is:pr is:open created:>=<since>`.
 - Pushed to: an open PR with a commit whose `committedDate` falls in the window (from the open-PR
   query above).
@@ -96,10 +97,15 @@ attach each PR to its issue, and to its top-level issue for grouping.
   open child that has children of its own. Record each one's state and assignee. Note the `Todo`
   items assigned to the person or unassigned; they are the candidates for what comes next.
 
-**Top-level issue.** For each issue, follow `parent` until an issue has none; that root is the
-group heading. Resolve each distinct parent once with `linear issues read <id>` and cache it,
-since many issues share roots. An issue with no parent is its own group only if it has children;
-otherwise it goes under **Standalone**.
+**Top-level issue.** For each issue, follow `parent` until you reach an issue that has none;
+that root is the group heading. Don't stop at the first parent. An issue's parent often has a
+parent of its own (REP-1662 → REP-1470 → REP-1454 → REP-1466), and grouping under an
+intermediate issue splits one stream into several.
+- Look each issue up with `linear issues read <id>` (`.parent`), or the Linear connector's
+  `get_issue` (`parentId`). Repeat on the parent until the parent field is empty.
+- Cache every issue you resolve; many issues share ancestors.
+- An issue with no parent is its own group only if it has children. Otherwise it goes under
+  **Standalone**.
 
 ## Emoji use
 
